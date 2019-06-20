@@ -1,10 +1,9 @@
-package com.ben.java.springboot.bean;
+package com.ben.java.springboot.configure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
 
 @Configuration
 @EnableConfigurationProperties({UserConfig.class})

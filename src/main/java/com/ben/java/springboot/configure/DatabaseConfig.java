@@ -1,4 +1,4 @@
-package com.ben.java.springboot.bean;
+package com.ben.java.springboot.configure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

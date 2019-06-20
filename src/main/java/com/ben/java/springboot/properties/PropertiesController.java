@@ -1,13 +1,11 @@
 package com.ben.java.springboot.properties;
 
-import com.ben.java.springboot.bean.DatabaseConfig;
-import com.ben.java.springboot.bean.UserConfig;
+import com.ben.java.springboot.configure.DatabaseConfig;
+import com.ben.java.springboot.configure.UserConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
