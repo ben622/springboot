@@ -3,13 +3,12 @@ package com.ben.java.springboot.resource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * 扩展资源映射
  */
 @Configuration
-public class MyWebMvcConfigureAdapter extends WebMvcConfigurerAdapter {
+public class MyWebMvcConfigureAdapter implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
