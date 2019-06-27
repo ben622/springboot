@@ -1,0 +1,26 @@
+.laylogin-header {
+	width: 100%;
+	height: 300px;
+	text-align: center;
+}
+
+.laylogin-header-title {
+	font-size: 30px;
+	color: black;
+	font-weight: bold;
+	line-height: 300px;
+	position: relative;
+}
+
+.laylogin-header-desc {
+	font-size: 14px;
+	color: #8D8D8D;
+	position: relative;
+	transform: translateY(-130px);
+}
+
+.laylogin-form-container {
+	width: 300px;
+	height: 400px;
+	margin: 0 auto;
+}

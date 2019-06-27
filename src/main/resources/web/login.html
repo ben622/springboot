@@ -1,38 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link th:href="@{/css/login.css}" rel="stylesheet"/>
     <link th:href="@{/layui-v2.5.4/layui/css/layui.css}" rel="stylesheet"/>
-    <title>login system</title>
+    <title>SpringBoot</title>
 </head>
 <body>
-<div class="layui-container">
-    <form class="layui-form layui-from-pane" th:action="@{/login}" style="margin-top:20px" method="post">
+<div class="laylogin-header">
+    <p class="laylogin-header-title">admin</p>
+    <p class="laylogin-header-desc">后台管理系統</p>
+</div>
+<div class="laylogin-form-container">
+    <form class="layui-form" th:action="@{/login}" style="margin-top:20px" method="post">
 
-        <div class="layui-form-mid">
-            <label class="layui-form-label">用户名称</label>
-            <div class="layui-input-block">
-                <input type="text" name="userName" required lay-verify="required" autocomplete="off"
-                       placeholder="请输入用户名称" class="layui-input">
+        <div class="layui-form-item">
+            <div class="layui-input-inline" style="width: 100%;">
+                <input type="text" name="userId" required lay-verify="required" autocomplete="off"
+                       placeholder="手机号/用户ID" class="layui-input">
             </div>
         </div>
-        <div class="layui-form-mid">
-            <label class="layui-form-label">密码</label>
-            <div class="layui-input-block">
-                <input type="text" name="password" required lay-verify="required" autocomplete="off" placeholder="请输入密码"
+
+        <div class="layui-form-item">
+            <div class="layui-input-inline" style="width: 100%;">
+                <input type="password" name="password" required lay-verify="required" autocomplete="off" placeholder="请输入密码"
                        class="layui-input">
             </div>
         </div>
 
-        <div class="layui-form-mid" style="margin-top:40px">
-            <div class="layui-input-block">
-                <button class="layui-btn  layui-btn-submit " lay-submit="" lay-filter="demo1">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </div>
+        <div class="layui-form-item " style="margin-top:40px">
+            <button class="layui-btn  layui-btn-submit " style="width: 100%;" lay-submit="" lay-filter="demo1">登录
+            </button>
         </div>
     </form>
 </div>
-
 
 </body>
 </html>

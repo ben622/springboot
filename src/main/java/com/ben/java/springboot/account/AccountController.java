@@ -18,10 +18,10 @@ public class AccountController {
     @Autowired
     AccountService accountService;
     @RequestMapping("/login")
-    public ModelAndView login(@RequestParam("userName") String name, @RequestParam("password") String pwd){
+    public ModelAndView login(@RequestParam("userId") String userId, @RequestParam("password") String pwd){
         ModelAndView modelAndView = new ModelAndView("index");
         UserInfo userInfo = new UserInfo();
-        userInfo.setNickname(name);
+        userInfo.setNickname(userId);
         userInfo.setPassword(pwd);
         modelAndView.addObject("user", userInfo);
         return modelAndView;

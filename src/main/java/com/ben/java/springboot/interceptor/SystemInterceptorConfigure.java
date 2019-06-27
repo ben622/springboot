@@ -15,7 +15,8 @@ public class SystemInterceptorConfigure  implements WebMvcConfigurer {
     private List<String> patterns = new ArrayList<String>(){{
         add("/toLogin");
         add("/login");
-        add("/v1");
+        add("/css/**");
+        add("/js/**");
     }};
 
     @Override
