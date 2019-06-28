@@ -12,7 +12,7 @@ public abstract class SystemException extends Exception {
 
     public SystemException(int code,String message) {
         response.setCode(code);
-        response.setMessage(message);
+        response.setMsg(message);
     }
 
     public Response<String> getResponse() {

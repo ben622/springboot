@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @SessionAttributes("user")
 public class AccountController {
@@ -17,15 +19,17 @@ public class AccountController {
 
     @RequestMapping("/login")
     @ResponseBody
-    public Response<UserInfo> login(@RequestParam("userId") String userId, @RequestParam("password") String passworde) throws LoginException {
+    public Response<UserInfo> login(HttpServletRequest request, @RequestParam("userId") String userId, @RequestParam("password") String passworde) throws LoginException {
         UserInfo userInfo = repository.findUserInfoByUidOrMobileAndPassword(Integer.parseInt(userId), userId, passworde);
         if (userInfo == null) {
             throw new LoginException();
         }
 
+        request.getSession().setAttribute("user", userInfo);
+
         Response<UserInfo> response = new Response<>();
         response.setCode(ResultCode.REQUEST_SUCCESSFUL);
-        response.setMessage("成功");
+        response.setMsg("成功");
         response.setData(userInfo);
 
         return response;

@@ -1,7 +1,5 @@
 package com.ben.java.springboot.bean;
 
-import java.util.List;
-
 /**
  * 响应结果
  * @param <T>
@@ -9,7 +7,7 @@ import java.util.List;
 public class Response<T> {
     private int code;
     private int count;
-    private String message;
+    private String msg;
     private T data;
 
     public int getCode() {
@@ -28,12 +26,12 @@ public class Response<T> {
         this.count = count;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public T getData() {

@@ -1,6 +1,6 @@
 package com.ben.java.springboot.interceptor;
 
-import com.ben.java.springboot.bean.UserInfo;
+import com.ben.java.springboot.domain.UserInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;

@@ -9,7 +9,7 @@
     <title>SpringBoot</title>
 
 
-    <script>
+    <script th:inline="javascript">
         layui.use('form', function () {
             var form = layui.form
             //监听提交
@@ -18,16 +18,23 @@
                     type:"post",
                     url:"login",
                     data:data.field,
-                    dataType:"application/json;charset=UTF-8",
+                    dataType:"json",
                     cache:false,
                     async:true,
                     success:function(result){
-                        
-                        console.info(result);
+                        var response = eval(result);
+                        if (response.code == 0) {
+                            //登陆成功
+                            layer.msg("登陆成功")
+                            window.location.href=[[@{/home}]]
+                        }else{
+                            layer.msg(response.msg,{icon: 5});
+                        }
 
                     },
                     error:function(result){
-                        console.info(result);
+                        var response = eval(result)
+                        alert(response.msg);
                     }
                 });
                 return false;
