@@ -3,8 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/login.css}" rel="stylesheet"/>
-    <link th:href="@{/layui-v2.5.4/layui/css/layui.css}" rel="stylesheet"/>
+    <link th:href="@{/js/layui-v2.5.4/layui/css/layui.css}" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script th:src="@{/js/layui-v2.5.4/layui/layui.js}"></script>
     <title>SpringBoot</title>
+
+
+    <script>
+        layui.use('form', function () {
+            var form = layui.form
+            //监听提交
+            form.on('submit(login)', function(data){
+                $.ajax({
+                    type:"post",
+                    url:"login",
+                    data:data.field,
+                    dataType:"application/json;charset=UTF-8",
+                    cache:false,
+                    async:true,
+                    success:function(result){
+                        
+                        console.info(result);
+
+                    },
+                    error:function(result){
+                        console.info(result);
+                    }
+                });
+                return false;
+            });
+        });
+
+
+    </script>
 </head>
 <body>
 <div class="laylogin-header">
@@ -29,7 +60,7 @@
         </div>
 
         <div class="layui-form-item " style="margin-top:40px">
-            <button class="layui-btn  layui-btn-submit " style="width: 100%;" lay-submit="" lay-filter="demo1">登录
+            <button class="layui-btn  layui-btn-submit " style="width: 100%;" lay-submit="" lay-filter="login">登录
             </button>
         </div>
     </form>

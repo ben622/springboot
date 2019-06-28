@@ -1,6 +1,7 @@
 package com.ben.java.springboot.interceptor;
 
 import com.ben.java.springboot.bean.UserInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 public class TokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if(!StringUtils.isBlank(request.getHeader("x-requested-with")) && request.getHeader("x-requested-with").equals("XMLHttpRequest")){
+            return true;
+        }
         UserInfo user = (UserInfo) request.getSession().getAttribute("user");
         if (user == null) {
             //用户状态非法，跳转登录

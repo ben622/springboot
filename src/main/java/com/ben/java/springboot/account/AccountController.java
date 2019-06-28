@@ -1,55 +1,38 @@
 package com.ben.java.springboot.account;
 
-import com.alibaba.druid.support.json.JSONParser;
-import com.alibaba.fastjson.JSONArray;
-import com.ben.java.springboot.account.service.AccountService;
-import com.ben.java.springboot.bean.UserInfo;
+import com.ben.java.springboot.bean.Response;
+import com.ben.java.springboot.domain.UserInfo;
+import com.ben.java.springboot.exception.LoginException;
+import com.ben.java.springboot.repository.UserRepository;
+import com.ben.java.springboot.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
-import java.util.UUID;
 
 @Controller
 @SessionAttributes("user")
 public class AccountController {
     @Autowired
-    AccountService accountService;
+    UserRepository repository;
+
     @RequestMapping("/login")
-    public ModelAndView login(@RequestParam("userId") String userId, @RequestParam("password") String pwd){
-        ModelAndView modelAndView = new ModelAndView("index");
-        UserInfo userInfo = new UserInfo();
-        userInfo.setNickname(userId);
-        userInfo.setPassword(pwd);
-        modelAndView.addObject("user", userInfo);
-        return modelAndView;
+    @ResponseBody
+    public Response<UserInfo> login(@RequestParam("userId") String userId, @RequestParam("password") String passworde) throws LoginException {
+        UserInfo userInfo = repository.findUserInfoByUidOrMobileAndPassword(Integer.parseInt(userId), userId, passworde);
+        if (userInfo == null) {
+            throw new LoginException();
+        }
+
+        Response<UserInfo> response = new Response<>();
+        response.setCode(ResultCode.REQUEST_SUCCESSFUL);
+        response.setMessage("成功");
+        response.setData(userInfo);
+
+        return response;
     }
     @RequestMapping("/toLogin")
     public String toLogin(){
         return "login";
-    }
-
-    @ModelAttribute("uuid")
-    public String getUserUUID(){
-        return UUID.randomUUID().toString();
-    }
-
-
-    @RequestMapping("/getUUID")
-    public ModelAndView getUUID(@ModelAttribute("uuid") String uuid){
-        ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("user", uuid);
-        return modelAndView;
-    }
-
-
-    @RequestMapping("queryAllUser")
-    @ResponseBody
-    public String queryAllUsers(){
-        List<UserInfo> userInfos = accountService.findAll();
-        return JSONArray.toJSONString(userInfos);
     }
 
 }

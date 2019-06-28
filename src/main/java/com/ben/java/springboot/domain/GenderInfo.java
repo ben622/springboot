@@ -1,4 +1,4 @@
-package com.ben.java.springboot.jpa.domain;
+package com.ben.java.springboot.domain;
 
 import javax.persistence.*;
 

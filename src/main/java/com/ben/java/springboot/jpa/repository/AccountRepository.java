@@ -1,6 +1,6 @@
 package com.ben.java.springboot.jpa.repository;
 
-import com.ben.java.springboot.jpa.domain.UserInfo;
+import com.ben.java.springboot.domain.UserInfo;
 import org.springframework.data.repository.Repository;
 
 
