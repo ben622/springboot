@@ -1,6 +1,6 @@
 package com.ben.java.springboot.exception;
 
-import com.ben.java.springboot.bean.Response;
+import com.ben.java.springboot.bean.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,7 +13,7 @@ public class SystemExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(SystemException.class)
-    public Response<String> handlerException(SystemException e) {
-        return e.getResponse();
+    public Result<String> handlerException(SystemException e) {
+        return e.getResult();
     }
 }

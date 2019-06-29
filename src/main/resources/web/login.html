@@ -22,19 +22,19 @@
                     cache:false,
                     async:true,
                     success:function(result){
-                        var response = eval(result);
-                        if (response.code == 0) {
+                        var result = eval(result);
+                        if (result.code == 0) {
                             //登陆成功
                             layer.msg("登陆成功")
-                            window.location.href=[[@{/home}]]
+                            window.location.href=/*[[@{/home}]]*/ "/"
                         }else{
-                            layer.msg(response.msg,{icon: 5});
+                            layer.msg(result.msg,{icon: 5});
                         }
 
                     },
                     error:function(result){
-                        var response = eval(result)
-                        alert(response.msg);
+                        var result = eval(result)
+                        alert(result.msg);
                     }
                 });
                 return false;

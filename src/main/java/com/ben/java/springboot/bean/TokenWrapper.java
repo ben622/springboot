@@ -1,5 +1,6 @@
 package com.ben.java.springboot.bean;
 
+import com.ben.java.springboot.domain.UserInfo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -20,7 +21,7 @@ public class TokenWrapper {
         this.createTime = createTime;
     }
 
-    @Bean
+    @Bean("TokenWrapper")
     @Scope(scopeName = "prototype")
     public TokenWrapper getTokenWrapper(){
         return new TokenWrapper(System.currentTimeMillis());

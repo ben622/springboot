@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Springboot</title>
+    <link th:href="@{/css/index.css}" rel="stylesheet"/>
     <link th:href="@{/js/layui-v2.5.4/layui/css/layui.css}" rel="stylesheet"/>
+
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -27,7 +29,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img"/>
-                    <!--<span th:text=${session.user.nickname}></span>-->
+                    [(${session.user.nickName})]
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
@@ -41,17 +43,15 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+            <ul class="layui-nav layui-nav-tree" lay-filter="menu">
                 <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">所有商品</a>
+                    <a class="" href="javascript:;">系统管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="javascript:;">列表三</a></dd>
-                        <dd><a href="">超链接</a></dd>
+                        <dd><a href="javascript:;" data-url="user/jumpUserManager" data-id="1" data-text="用户管理">用户管理</a></dd>
+                        <dd><a href="javascript:;" data-url="role/jumpRoleManager" data-id="2" data-text="角色管理">角色管理</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+               <!-- <li class="layui-nav-item">
                     <a href="javascript:;">解决方案</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">列表一</a></dd>
@@ -60,14 +60,21 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item"><a href="">云市场</a></li>
-                <li class="layui-nav-item"><a href="">发布商品</a></li>
+                <li class="layui-nav-item"><a href="">发布商品</a></li>-->
             </ul>
         </div>
     </div>
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;">内容主体区域</div>
+        <div class="layui-tab layui-tab-brief main-layout-tab" lay-filter="tab" lay-allowClose="true">
+            <ul class="layui-tab-title">
+                <li class="layui-this welcome"> welcome </li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show" style="background: #f5f5f5;"></div>
+            </div>
+        </div>
     </div>
 
     <div class="layui-footer">
@@ -75,13 +82,8 @@
         ©www.zhangchuany.com
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script th:src="@{/js/layui-v2.5.4/layui/layui.js}"></script>
-<script>
-    //JavaScript代码区域
-    layui.use('element', function () {
-        var element = layui.element;
-
-    });
-</script>
+<script th:src="@{/js/index.js}"></script>
 </body>
 </html>

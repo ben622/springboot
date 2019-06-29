@@ -1,7 +1,7 @@
 package com.ben.java.springboot.util;
 
 import com.ben.java.springboot.bean.TokenWrapper;
-import com.ben.java.springboot.bean.UserInfo;
+import com.ben.java.springboot.domain.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,13 +14,13 @@ public class TokenManager {
     @Autowired
     private BeanFactory beanFactory;
 
-    private ConcurrentHashMap<String,TokenWrapper> tokens = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String,TokenWrapper> tokens = new ConcurrentHashMap<>();
 
     //token最大有效时间
     private final long TOKEN_MAX_ENABLE_TIMESTEMP = 1000 * 60;
 
     public TokenWrapper generateTokenByUser(@NotNull UserInfo userInfo){
-        TokenWrapper tokenWrapper = beanFactory.getApplicationContext().getBean(TokenWrapper.class);
+        TokenWrapper tokenWrapper = (TokenWrapper) beanFactory.getApplicationContext().getBean("TokenWrapper");
         tokenWrapper.setUserInfo(userInfo);
         tokens.put(tokenWrapper.getToken(), tokenWrapper);
         return tokenWrapper;
@@ -31,6 +31,10 @@ public class TokenManager {
         return tokens.get(token);
     }
 
+
+    private void autoClearInvalidToken() {
+
+    }
 
 
 }
