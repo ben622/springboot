@@ -22,7 +22,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         UserInfo user = (UserInfo) request.getSession().getAttribute("user");
         if (user == null) {
             //用户状态非法，跳转登录
-            response.sendRedirect("toLogin");
+            response.sendRedirect(request.getContextPath()+"/toLogin");
             return false;
         }
         return true;

@@ -26,10 +26,4 @@ public class RoleController {
         return result;
 
     }
-
-    @RequestMapping("/jumpRoleManager")
-    public String jumpRoleManager() {
-        return "role/roleManager";
-    }
-
 }

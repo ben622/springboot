@@ -12,7 +12,7 @@ public class MyWebMvcConfigureAdapter implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/mysource/**")//对外提供的访问路径
-                .addResourceLocations("classpath:/external_source/"); //访问路径实际映射文件地址
+        registry.addResourceHandler("/**")//对外提供的访问路径
+                .addResourceLocations("classpath:/web/"); //访问路径实际映射文件地址
     }
 }

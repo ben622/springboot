@@ -26,7 +26,15 @@ public class UserController {
     TokenManager tokenManager;
 
 
-    @RequestMapping(value = "/login")
+    /**
+     * Ajax登陆
+     * @param request
+     * @param userId
+     * @param passworde
+     * @return
+     * @throws LoginException
+     */
+    @RequestMapping("/login")
     @ResponseBody
     public Result<UserInfo> login(HttpServletRequest request, @RequestParam("userId") String userId, @RequestParam("password") String passworde) throws LoginException {
         UserInfo userInfo = repository.findUserInfoByUidOrMobileAndPassword(Integer.parseInt(userId), userId, passworde);
@@ -41,13 +49,25 @@ public class UserController {
 
         return ResultFactory.obtainResultBySuccessful(1, userInfo);
     }
+
+    /**
+     * 退出登录
+     * @param request
+     * @return
+     */
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        return "toLogin";
+    }
+
+
+    /**
+     * 跳转登陆
+     * @return
+     */
     @RequestMapping("/toLogin")
     public String toLogin(){
         return "login";
     }
-    @RequestMapping("/user/jumpUserManager")
-    public String jumpUserManager(){
-        return "user/userManager";
-    }
-
 }
