@@ -5,13 +5,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Configuration
-public class TokenWrapper {
+public class TokenWrapper implements Serializable {
     private String token;
     private long createTime;
-    private UserInfo userInfo;
 
     public TokenWrapper() {
     }
@@ -44,11 +44,4 @@ public class TokenWrapper {
         this.createTime = createTime;
     }
 
-    public UserInfo getUserInfo() {
-        return userInfo;
-    }
-
-    public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
-    }
 }

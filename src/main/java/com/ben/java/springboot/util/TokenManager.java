@@ -1,39 +1,33 @@
 package com.ben.java.springboot.util;
 
 import com.ben.java.springboot.bean.TokenWrapper;
-import com.ben.java.springboot.domain.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotNull;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import javax.annotation.Resource;
 
 @Component
 public class TokenManager {
     @Autowired
     private BeanFactory beanFactory;
 
-    private static ConcurrentHashMap<String,TokenWrapper> tokens = new ConcurrentHashMap<>();
+    @Resource
+    private RedisTemplate<String,TokenWrapper> redisTemplate;
+
 
     //token最大有效时间
     private final long TOKEN_MAX_ENABLE_TIMESTEMP = 1000 * 60;
 
-    public TokenWrapper generateTokenByUser(@NotNull UserInfo userInfo){
+    public TokenWrapper generateToken(){
         TokenWrapper tokenWrapper = (TokenWrapper) beanFactory.getApplicationContext().getBean("TokenWrapper");
-        tokenWrapper.setUserInfo(userInfo);
-        tokens.put(tokenWrapper.getToken(), tokenWrapper);
+        redisTemplate.opsForValue().set(tokenWrapper.getToken(), tokenWrapper);
         return tokenWrapper;
     }
 
 
     public TokenWrapper getTokenWrapperByToken(String token) {
-        return tokens.get(token);
-    }
-
-
-    private void autoClearInvalidToken() {
-
+        return redisTemplate.opsForValue().get(token);
     }
 
 
