@@ -44,4 +44,11 @@ public class TokenWrapper implements Serializable {
         this.createTime = createTime;
     }
 
+    @Override
+    public String toString() {
+        return "TokenWrapper{" +
+                "token='" + token + '\'' +
+                ", createTime=" + createTime +
+                '}';
+    }
 }

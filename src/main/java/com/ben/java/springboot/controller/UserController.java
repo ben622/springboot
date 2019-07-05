@@ -7,7 +7,9 @@ import com.ben.java.springboot.exception.LoginException;
 import com.ben.java.springboot.repository.UserRepository;
 import com.ben.java.springboot.util.ResultCode;
 import com.ben.java.springboot.util.ResultFactory;
+
 import com.ben.java.springboot.util.TokenManager;
+import org.apache.commons.lang3.SerializationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +47,6 @@ public class UserController {
         }
 
         TokenWrapper tokenWrapper = tokenManager.generateToken();
-        logger.info(tokenWrapper.getToken());
-
         request.getSession().setAttribute("user", userInfo);
 
         return ResultFactory.obtainResultBySuccessful(1, userInfo);
