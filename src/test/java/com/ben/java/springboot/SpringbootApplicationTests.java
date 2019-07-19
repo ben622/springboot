@@ -18,7 +18,7 @@ public class SpringbootApplicationTests {
 
     @Test
     public void contextLoads() {
-        /*Jedis jedis = new Jedis("www.zhangchuany.com",20001);
+     /*Jedis jedis = new Jedis("www.zhangchuany.com",20001);
         jedis.auth("redis622");
         System.out.println(jedis.clusterNodes());
         jedis.set("mykey", "hello redis");
@@ -29,9 +29,9 @@ public class SpringbootApplicationTests {
         //nodes.add(new HostAndPort("39.105.76.133", 20001));
         nodes.add(new HostAndPort("39.105.76.133", 20002));
         nodes.add(new HostAndPort("39.105.76.133", 20003));
-        nodes.add(new HostAndPort("47.100.201.99", 20004));
-        nodes.add(new HostAndPort("47.100.201.99", 20005));
-        nodes.add(new HostAndPort("47.100.201.99", 20006));
+        nodes.add(new HostAndPort("39.105.76.133", 20004));
+        nodes.add(new HostAndPort("39.105.76.133", 20005));
+        nodes.add(new HostAndPort("39.105.76.133", 20006));
         // Jedis连接池配置
         GenericObjectPoolConfig jedisPoolConfig = new GenericObjectPoolConfig();
         // 最大空闲连接数, 默认8个
@@ -45,8 +45,8 @@ public class SpringbootApplicationTests {
         //对拿到的connection进行validateObject校验
         jedisPoolConfig.setTestOnBorrow(true);
 
-        JedisCluster jedisCluster = new JedisCluster(nodes,10000,100000,10000,"redis622",jedisPoolConfig);
-        jedisCluster.set("token", "new token by cluster");
+        JedisCluster jedisCluster = new JedisCluster(nodes,10000,100000,10000,"",jedisPoolConfig);
+        //edisCluster.set("token", "new token by cluster");
         System.out.println(jedisCluster.get("token"));
 
         try {

@@ -20,6 +20,8 @@ public class ResultCode {
     public static final int ACCOUNT_ERROR_LOGIN_EMPTY_ACCOUNT = 2102;
     //输入错误
     public static final int ACCOUNT_ERROR_LOGIN_INPUT_ERROR = 2103;
+    //未匹配到toekn
+    public static final int ACCOUNT_ERROR_LOGIN_TOKEN_EMTPY = 2104;
 
 
 

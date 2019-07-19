@@ -52,6 +52,16 @@ public class UserController {
         return ResultFactory.obtainResultBySuccessful(1, userInfo);
     }
 
+    @RequestMapping("/loginByToken")
+    @ResponseBody
+    public Result<String> loginByToken( @RequestParam("token") String token) throws LoginException {
+        TokenWrapper tokenWrapper = tokenManager.getTokenWrapperByToken(token);
+        if (tokenWrapper==null){
+            throw new LoginException(ResultCode.ACCOUNT_ERROR_LOGIN_TOKEN_EMTPY, "登录状态失效");
+        }
+        return ResultFactory.obtainResultBySuccessful(1, "登陆成功");
+    }
+
     /**
      * 退出登录
      * @param request
@@ -60,7 +70,8 @@ public class UserController {
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request){
         request.getSession().removeAttribute("user");
-        return "toLogin";
+        request.getSession().invalidate();
+        return "login";
     }
 
 

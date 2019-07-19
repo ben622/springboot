@@ -5,6 +5,7 @@
     <link href="../js/layui-v2.5.4/layui/css/layui.css" rel="stylesheet"/>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="../js/layui-v2.5.4/layui/layui.js"></script>
+    <script src="../js/configure.js"></script>
     <title>角色管理</title>
     <script th:inline="javascript">
         layui.use('table', function () {
@@ -31,11 +32,12 @@
                 cols: [
                         [
                             {type: 'checkbox', fixed: 'left'},
-                            {field: "roleId", title: "ID", fixed: "left", sort: true, type: "numbers",width: 150},
+                            {field: "roleId", title: "ID", fixed: "left", sort: true, width: 150},
                             {field: "roleName", title: "角色名称", align: "center"},
                             {field: "createTime", title: "创建日期", align: "center"},
                             {field: "modifyTime", title: "修改日期", align: "center"},
-                            {field: "roleRemark", title: "备注", align: "center", width: 440},
+                            {field: "roleRemark", title: "备注", align: "center", width: 400},
+                            {field: "uname", title: "角色创建用户", align: "center"},
                             {fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
                         ]
                 ]
@@ -84,14 +86,34 @@
             //监听行工具事件
             table.on('tool(test)', function(obj){
                 var data = obj.data;
-                //console.log(obj)
                 if(obj.event === 'del'){
-                    layer.confirm('真的删除行么', function(index){
-                        obj.del();
-                        layer.close(index);
+                    layer.confirm('是否删除该角色', function(index){
+                        $.ajax({
+                            type:"post",
+                            url: host+"/role/delRole",
+                            data:{"roleId":data.roleId},
+                            dataType:"json",
+                            cache:false,
+                            async:true,
+                            success:function(result){
+                                var result = eval(result);
+                                if (result.code == 0) {
+                                    layer.msg(result.msg);
+                                    obj.del();
+                                    layer.close(index);
+                                }else{
+                                    layer.msg(result.msg,{icon: 5});
+                                }
+
+                            },
+                            error:function(result){
+                                layer.msg(result,{icon: 5});
+                            }
+                        });
                     });
                 } else if(obj.event === 'edit'){
-                    layer.prompt({
+                    layer.msg(JSON.stringify(data));
+                    /*layer.prompt({
                         formType: 2
                         ,value: data.email
                     }, function(value, index){
@@ -99,7 +121,7 @@
                             email: value
                         });
                         layer.close(index);
-                    });
+                    });*/
                 }
             });
 

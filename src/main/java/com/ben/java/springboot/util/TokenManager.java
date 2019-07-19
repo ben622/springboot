@@ -16,23 +16,30 @@ public class TokenManager {
     @Autowired
     private BeanFactory beanFactory;
 
+    @Deprecated
     @Resource
-    private RedisTemplate<String,TokenWrapper> redisTemplate;
+    private RedisTemplate<String, TokenWrapper> redisTemplate;
 
     @Autowired
     private JedisTemplate jedisTemplate;
 
 
-    public TokenWrapper generateToken(){
+    public TokenWrapper generateToken() {
+        logger.info("================================================");
         TokenWrapper tokenWrapper = (TokenWrapper) beanFactory.getApplicationContext().getBean("TokenWrapper");
+        logger.info("=");
+        logger.info("=  " + tokenWrapper.getToken());
         jedisTemplate.set(tokenWrapper.getToken(), tokenWrapper);
-        logger.info((SerializationUtils.deserialize(jedisTemplate.get(tokenWrapper.getToken().getBytes()))).toString());
+        logger.info("=  " + (SerializationUtils.deserialize(jedisTemplate.get(tokenWrapper.getToken().getBytes()))).toString());
+        logger.info("=");
+        logger.info("================================================");
         return tokenWrapper;
     }
 
 
     public TokenWrapper getTokenWrapperByToken(String token) {
-        return redisTemplate.opsForValue().get(token);
+        byte[] bytes = jedisTemplate.get(token.getBytes());
+        return bytes == null ? null : SerializationUtils.deserialize(bytes);
     }
 
 
