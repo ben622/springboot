@@ -1,7 +1,7 @@
 package com.ben.java.springboot.bean;
 
 
-public class UserInfo {
+public class UserInfoBean {
     private int uid;
     private int id;
     private String nickname;

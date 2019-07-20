@@ -12,18 +12,20 @@ import java.util.UUID;
 public class TokenWrapper implements Serializable {
     private String token;
     private long createTime;
+    private UserInfo userInfo;
 
     public TokenWrapper() {
     }
 
     public TokenWrapper(long createTime) {
-        this.token = UUID.randomUUID().toString().replaceAll("-", "");;
+        this.token = UUID.randomUUID().toString().replaceAll("-", "");
+        ;
         this.createTime = createTime;
     }
 
     @Bean("TokenWrapper")
     @Scope(scopeName = "prototype")
-    public TokenWrapper getTokenWrapper(){
+    public TokenWrapper getTokenWrapper() {
         return new TokenWrapper(System.currentTimeMillis());
     }
 
@@ -44,11 +46,21 @@ public class TokenWrapper implements Serializable {
         this.createTime = createTime;
     }
 
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
+
     @Override
     public String toString() {
         return "TokenWrapper{" +
                 "token='" + token + '\'' +
                 ", createTime=" + createTime +
+                ", userInfo=" + userInfo +
                 '}';
     }
+
 }

@@ -9,5 +9,6 @@ import java.util.List;
  * sys_user
  */
 public interface UserRepository extends CrudRepository<UserInfo,Integer> {
-    UserInfo findUserInfoByUidOrMobileAndPassword(int uid, String mobile, String password);
+    UserInfo findUserInfoByUserIdAndPassword(String userId, String password);
+    UserInfo findUserInfoByMobileAndPassword(String mobile, String password);
 }

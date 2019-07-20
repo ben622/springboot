@@ -5,6 +5,7 @@ import com.ben.java.springboot.domain.RoleInfo;
 import com.ben.java.springboot.domain.UserInfo;
 import com.ben.java.springboot.repository.RoleRepository;
 import com.ben.java.springboot.util.ResultFactory;
+import com.ben.java.springboot.util.TimeUtil;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,6 @@ import java.util.Date;
 @RequestMapping("/role")
 public class RoleController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm::ss");
     @Autowired
     private RoleRepository repository;
 
@@ -44,8 +44,8 @@ public class RoleController {
         RoleInfo roleInfo = new RoleInfo();
         roleInfo.setRoleName(roleName);
         roleInfo.setRoleRemark(roleRemark);
-        roleInfo.setCreateTime(dateFormat.format(new Date()));
-        roleInfo.setModifyTime(dateFormat.format(new Date()));
+        roleInfo.setCreateTime(TimeUtil.DATE_FORMAT_YYYY_MM_DD.format(new Date()));
+        roleInfo.setModifyTime(TimeUtil.DATE_FORMAT_YYYY_MM_DD.format(new Date()));
         UserInfo user = (UserInfo) request.getSession().getAttribute("user");
         roleInfo.setUid(user.getUid());
         roleInfo.setUname(user.getNickName());

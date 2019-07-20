@@ -1,7 +1,9 @@
 package com.ben.java.springboot.interceptor;
 
 import com.ben.java.springboot.domain.UserInfo;
+import com.ben.java.springboot.util.TokenManager;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Configuration
 public class TokenInterceptor implements HandlerInterceptor {
+    @Autowired
+    private TokenManager tokenManager;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if(!StringUtils.isBlank(request.getHeader("x-requested-with")) && request.getHeader("x-requested-with").equals("XMLHttpRequest")){

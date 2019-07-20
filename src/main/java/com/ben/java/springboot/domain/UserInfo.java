@@ -1,14 +1,17 @@
 package com.ben.java.springboot.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "sys_user")
-public class UserInfo {
+public class UserInfo implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int uid;
+    @Column
+    private String userId;
     @Column
     private String mobile;
     @Column
@@ -116,5 +119,31 @@ public class UserInfo {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "uid=" + uid +
+                ", userId='" + userId + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", age=" + age +
+                ", genderId=" + genderId +
+                ", weixin='" + weixin + '\'' +
+                ", qq='" + qq + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", password='" + password + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", lastTime='" + lastTime + '\'' +
+                ", roleId=" + roleId +
+                '}';
     }
 }
