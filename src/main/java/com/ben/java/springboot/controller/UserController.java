@@ -2,6 +2,7 @@ package com.ben.java.springboot.controller;
 
 import com.ben.java.springboot.bean.Result;
 import com.ben.java.springboot.bean.TokenWrapper;
+import com.ben.java.springboot.domain.RoleInfo;
 import com.ben.java.springboot.domain.UserInfo;
 import com.ben.java.springboot.domain.UserLoginLog;
 import com.ben.java.springboot.exception.LoginException;
@@ -12,6 +13,8 @@ import com.ben.java.springboot.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -133,5 +136,15 @@ public class UserController {
     @RequestMapping("/toLogin")
     public String toLogin() {
         return "login";
+    }
+
+
+    @RequestMapping(value = "/user/findByPage", method = RequestMethod.GET)
+    @ResponseBody
+    public Result<UserInfo> findRoleByPage(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
+        Result result = ResultFactory.obtainResultByPage(userRepository.findAll(PageRequest.of(pageNum - 1, pageSize,new Sort(Sort.Direction.DESC,"lastTime"))));
+        logger.info(result.toString());
+        return result;
+
     }
 }
