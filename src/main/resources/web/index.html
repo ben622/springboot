@@ -43,25 +43,28 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree" lay-filter="menu">
+            <ul class="layui-nav layui-nav-tree" lay-filter="menu" id="layui-nav-tree">
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">系统管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" data-url="./user/userManager.html" data-id="1" data-text="用户管理">用户管理</a></dd>
-                        <dd><a href="javascript:;" data-url="./role/roleManager.html" data-id="2" data-text="角色管理">角色管理</a></dd>
-                        <dd><a href="javascript:;" data-url="./role/roleManager.html" data-id="3" data-text="权限管理">权限管理</a></dd>
+                        <dd><a href="javascript:;" data-url="./user/userManager.html" data-id="1"
+                               data-text="用户管理">用户管理</a></dd>
+                        <dd><a href="javascript:;" data-url="./role/roleManager.html" data-id="2"
+                               data-text="角色管理">角色管理</a></dd>
+                        <dd><a href="javascript:;" data-url="./role/roleManager.html" data-id="3"
+                               data-text="权限管理">权限管理</a></dd>
                     </dl>
                 </li>
-               <!-- <li class="layui-nav-item">
-                    <a href="javascript:;">解决方案</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item"><a href="">云市场</a></li>
-                <li class="layui-nav-item"><a href="">发布商品</a></li>-->
+                <!-- <li class="layui-nav-item">
+                     <a href="javascript:;">解决方案</a>
+                     <dl class="layui-nav-child">
+                         <dd><a href="javascript:;">列表一</a></dd>
+                         <dd><a href="javascript:;">列表二</a></dd>
+                         <dd><a href="">超链接</a></dd>
+                     </dl>
+                 </li>
+                 <li class="layui-nav-item"><a href="">云市场</a></li>
+                 <li class="layui-nav-item"><a href="">发布商品</a></li>-->
             </ul>
         </div>
     </div>
@@ -70,7 +73,7 @@
         <!-- 内容主体区域 -->
         <div class="layui-tab layui-tab-brief main-layout-tab" lay-filter="tab" lay-allowClose="true">
             <ul class="layui-tab-title">
-                <li class="layui-this welcome"> welcome </li>
+                <li class="layui-this welcome"> welcome</li>
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show" style="background: #f5f5f5;"></div>
@@ -85,6 +88,80 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="./js/layui-v2.5.4/layui/layui.js"></script>
-<script src="./js/index.js"></script>
+<script src="./js/configure.js"></script>
+<script th:inline="javascript">
+    $.ajax({
+        type: "get",
+        url: /*[[@{/user/getUserPermission}]]*/ host + "/user/getUserPermission",
+        data: {"uid":/*[(${session.user.uid})]*/ 0},
+        dataType: "json",
+        cache: false,
+        async: true,
+        success: function (result) {
+            var result = eval(result);
+            if (result.code == 0) {
+                $("#layui-nav-tree").empty();
+                for (var i = 0; i < result.count; i++) {
+                    var permission = result.data[i];
+                    if (permission.permissionParentId > 0) continue
+                    //追加父节点
+                    $("#layui-nav-tree").append(" <li class=\"layui-nav-item layui-nav-item\">\n" +
+                        "                    <a class=\"\" href=\"javascript:;\">" + permission.permissionName + "</a>\n" +
+                        "                    <dl class=\"layui-nav-child\" id=\"layui-nav-child-" + permission.permissionId + "\">\n" +
+                        "                    </dl>\n" +
+                        "                </li>")
+
+                }
+
+                for (var i = 0; i < result.count; i++) {
+                    var permission = result.data[i];
+                    if (permission.permissionParentId <= 0) continue
+                    $("#layui-nav-child-" + permission.permissionParentId).append(permission.permissionUrl)
+                }
+
+
+                layui.use(['layer', 'form', 'element', 'jquery'], function () {
+                    var element = layui.element;
+                    var mainLayout = $('#main-layout');
+                    element.on("nav(menu)", function (elem) {
+                        var nav_a = $(elem[0]);
+
+                        var id = nav_a.attr('data-id');
+                        var url = nav_a.attr('data-url');
+                        var text = nav_a.attr('data-text');
+
+                        if (!url) {
+                            return;
+                        }
+                        var isActive = $('.main-layout-tab .layui-tab-title').find("li[lay-id=" + id + "]");
+                        if (isActive.length > 0) {
+                            //切换到选项卡
+                            element.tabChange('tab', id);
+                        } else {
+                            element.tabAdd('tab', {
+                                title: text,
+                                content: '<iframe src="' + url + '" id="' + id + '" name="iframe' + id + '" class="iframe" frameborder="0" data-id="' + id + '" scrolling="auto" height="100%" width="100%"></iframe>',
+                                id: id
+                            });
+                            element.tabChange('tab', id);
+                        }
+                        mainLayout.removeClass('hide-side');
+                    })
+
+                });
+
+            } else {
+                layer.msg(result.msg, {icon: 5});
+            }
+
+        },
+        error: function (result) {
+            var result = eval(result)
+            alert(result.msg);
+        }
+    });
+
+
+</script>
 </body>
 </html>

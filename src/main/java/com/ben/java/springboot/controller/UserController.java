@@ -2,11 +2,13 @@ package com.ben.java.springboot.controller;
 
 import com.ben.java.springboot.bean.Result;
 import com.ben.java.springboot.bean.TokenWrapper;
+import com.ben.java.springboot.domain.Permission;
 import com.ben.java.springboot.domain.RoleInfo;
 import com.ben.java.springboot.domain.UserInfo;
 import com.ben.java.springboot.domain.UserLoginLog;
 import com.ben.java.springboot.exception.LoginException;
 import com.ben.java.springboot.repository.LoginLogRepository;
+import com.ben.java.springboot.repository.PermissionRepository;
 import com.ben.java.springboot.repository.UserRepository;
 import com.ben.java.springboot.util.*;
 
@@ -31,6 +33,8 @@ public class UserController {
     UserRepository userRepository;
     @Autowired
     LoginLogRepository loginLogRepository;
+    @Autowired
+    PermissionRepository permissionRepository;
     @Autowired
     TokenManager tokenManager;
     @Autowired
@@ -147,4 +151,16 @@ public class UserController {
         return result;
 
     }
+
+
+    @RequestMapping(value = "/user/getUserPermission", method = RequestMethod.GET)
+    @ResponseBody
+    public Result<Permission> findPermissionByUid(@RequestParam("uid") int uid) {
+        Result result = ResultFactory.obtainResultByList(permissionRepository.findAllByUid(uid));
+        logger.info(result.toString());
+        return result;
+
+    }
+
+
 }

@@ -12,6 +12,10 @@ public class ResultFactory {
         return obtainResult(ResultCode.SUCCESSFUL, "成功", (int) page.getTotalElements(), page.getContent());
     }
 
+    public static <T> Result obtainResultByList(@NotNull List<T> lists) {
+        return obtainResult(ResultCode.SUCCESSFUL, "成功", lists.size(), lists);
+    }
+
     public static <T> Result obtainResultBySuccessful(int count, List<T> t) {
         return obtainResult(ResultCode.SUCCESSFUL, "成功", count, t);
     }
