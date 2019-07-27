@@ -153,6 +153,11 @@ public class UserController {
     }
 
 
+    /**
+     * 获取用户的权限
+     * @param uid
+     * @return
+     */
     @RequestMapping(value = "/user/getUserPermission", method = RequestMethod.GET)
     @ResponseBody
     public Result<Permission> findPermissionByUid(@RequestParam("uid") int uid) {
