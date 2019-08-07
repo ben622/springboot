@@ -26,4 +26,13 @@ public class ResultCode {
 
 
 
+
+    //accid验证失败，找不到此Accid
+    public static final int ACCID_VERIFY_FAILURE = 3000;
+
+
+
+
+
+
 }

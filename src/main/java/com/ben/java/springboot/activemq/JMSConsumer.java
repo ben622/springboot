@@ -13,7 +13,7 @@ public class JMSConsumer {
     @Value("${spring.activemq.user}")
     private String user = "admin";
     @Value("${spring.activemq.password}")
-    private String password = "";
+    private String password = "admin";
     @Value("${spring.activemq.broker-url}")
     private String broker_url="tcp://47.100.201.99:61616";
 

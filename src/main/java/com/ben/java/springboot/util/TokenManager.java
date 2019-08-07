@@ -62,6 +62,10 @@ public class TokenManager {
         TokenWrapper tokenWrapper = SerializationUtils.deserialize(bytes);
         tokenWrapper.setToken(UUID.randomUUID().toString().replaceAll("-", ""));
         jedisTemplate.set(tokenWrapper.getToken(), tokenWrapper);
+
+        //remove origin token
+        jedisTemplate.del(token);
+
         return tokenWrapper;
 
     }

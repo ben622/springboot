@@ -119,6 +119,21 @@ public class UserController {
     }
 
     /**
+     * 验证Token是否合法
+     * @param token
+     * @return
+     * @throws LoginException
+     */
+    @RequestMapping("/verifyToken")
+    @ResponseBody
+    public Result<Boolean> verifyToken(@RequestParam("token") String token){
+        TokenWrapper tokenWrapper = tokenManager.getTokenWrapperByToken(token);
+        Result result = ResultFactory.obtainResultBySuccessful(1, tokenWrapper != null);
+        logger.info(result.toString());
+        return result;
+    }
+
+    /**
      * 退出登录
      *
      * @param request
@@ -146,7 +161,7 @@ public class UserController {
     @RequestMapping(value = "/user/findByPage", method = RequestMethod.GET)
     @ResponseBody
     public Result<UserInfo> findRoleByPage(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
-        Result result = ResultFactory.obtainResultByPage(userRepository.findAll(PageRequest.of(pageNum - 1, pageSize,new Sort(Sort.Direction.DESC,"lastTime"))));
+        Result result = ResultFactory.obtainResultByPage(userRepository.findAll(PageRequest.of(pageNum - 1, pageSize, new Sort(Sort.Direction.DESC, "lastTime"))));
         logger.info(result.toString());
         return result;
 
@@ -155,6 +170,7 @@ public class UserController {
 
     /**
      * 获取用户的权限
+     *
      * @param uid
      * @return
      */

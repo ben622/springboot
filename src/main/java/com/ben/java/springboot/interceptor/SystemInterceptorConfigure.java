@@ -13,6 +13,8 @@ import java.util.List;
 @Configuration
 public class SystemInterceptorConfigure  implements WebMvcConfigurer {
     private List<String> patterns = new ArrayList<String>(){{
+        add("/chat/auth");//sdk权限验证
+        add("/verifyToken");//系统token验证
         add("/toLogin");
         add("/login");
         add("/css/**");

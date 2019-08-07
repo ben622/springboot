@@ -49,6 +49,16 @@ public class JedisTemplate  {
 
     }
 
+    public void del(String key){
+        JedisCluster jedisCluster = redisConfigure.getJedisCluster();
+        jedisCluster.del(key.getBytes());
+        try {
+            jedisCluster.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }
